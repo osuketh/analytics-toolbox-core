@@ -22,7 +22,7 @@ GSUTIL = gsutil
 BQ = bq --location=$(BQ_REGION) --project_id=$(BQ_PROJECT)
 
 BQ_MODULE_LABEL ?= spatial_extension_module:core
-BQ_DEPLOY_DATASET = $(BQ_DATASET_PREFIX)carto
+BQ_DEPLOY_DATASET ?= $(BQ_DATASET_PREFIX)carto
 BQ_PREFIX = $(BQ_PROJECT).$(BQ_DATASET_PREFIX)
 
 PACKAGE_TYPE ?= CORE
@@ -155,7 +155,7 @@ endif
 
 storage-upload:
 	$(MAKE) build
-	$(GSUTIL) cp -r $(BQ_LIBRARY) $(BQ_LIBRARY_BUCKET)
+	$(GSUTIL) alpha storage cp -r $(BQ_LIBRARY) $(BQ_LIBRARY_BUCKET)
 
 storage-remove:
 	if [ `$(GSUTIL) ls $(BQ_LIBRARY_BUCKET) 2>&1 | grep "$(BQ_LIBRARY_BUCKET)"` ]; then \
