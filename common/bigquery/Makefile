@@ -18,7 +18,7 @@ ifneq (,$(wildcard $(ENV_DIR)/.env))
 endif
 
 SED = sed
-GSUTIL = gsutil
+GCLOUD = gcloud alpha
 BQ = bq --location=$(BQ_REGION) --project_id=$(BQ_PROJECT)
 
 BQ_MODULE_LABEL ?= spatial_extension_module:core
@@ -155,11 +155,11 @@ endif
 
 storage-upload:
 	$(MAKE) build
-	$(GSUTIL) alpha storage cp -r $(BQ_LIBRARY) $(BQ_LIBRARY_BUCKET)
+	$(GCLOUD) storage cp -r $(BQ_LIBRARY) $(BQ_LIBRARY_BUCKET)
 
 storage-remove:
-	if [ `$(GSUTIL) ls $(BQ_LIBRARY_BUCKET) 2>&1 | grep "$(BQ_LIBRARY_BUCKET)"` ]; then \
-		$(GSUTIL) rm -r -f $(BQ_LIBRARY_BUCKET); \
+	if [ `$(GCLOUD) storage ls $(BQ_LIBRARY_BUCKET) 2>&1 | grep "$(BQ_LIBRARY_BUCKET)"` ]; then \
+		$(GCLOUD) storage rm -r -f $(BQ_LIBRARY_BUCKET); \
 	fi
 
 dataset-create:
